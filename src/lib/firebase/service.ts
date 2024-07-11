@@ -43,23 +43,18 @@ export async function signUp(userData: {
         }
     ))
 
-    if(data.length > 0){
-        callback(false);
+    if (data.length > 0) {
+        callback(false, 'Email already exists');
     } else {
-        if(!userData.role){
+        if (!userData.role) {
             userData.role = 'member';
         }
-        if(userData.email == ""){
-            return callback(false)
+        if (userData.email === "") {
+            return callback(false, 'Please enter your email address');
         }
         userData.password = await bcrypt.hash(userData.password, 10);
 
-        await addDoc(collection(firestore, 'users'), userData)
-            .then(() => {
-                callback(true);
-            })
-            .catch((error) => {
-                callback(false);
-            })
+        await addDoc(collection(firestore, 'users'), userData);
+        callback(true, 'User registered successfully');
     }
 }
