@@ -12,9 +12,15 @@ export default async function handleGetData(req: NextApiRequest, res: NextApiRes
                         message: "Success"
                     })
                 } else {
+                    if(req.body.email == ""){
+                        return res.status(400).json({
+                            status: false,
+                            message: "Please enter your email address"
+                        })
+                    }
                     res.status(400).json({
                         status: false,
-                        message: "Failed"
+                        message: "Please enter another email address"
                     })
                 }
             }

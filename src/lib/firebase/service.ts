@@ -44,10 +44,13 @@ export async function signUp(userData: {
     ))
 
     if(data.length > 0){
-        callback({status: false});
+        callback(false);
     } else {
         if(!userData.role){
             userData.role = 'member';
+        }
+        if(userData.email == ""){
+            return callback(false)
         }
         userData.password = await bcrypt.hash(userData.password, 10);
 
